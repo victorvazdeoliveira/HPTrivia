@@ -14,6 +14,8 @@ struct ContentView: View {
     @State private var moveBackgroundImage = false
     @State private var animateViewsIn = false
     @State private var showInstructions = false
+    @State private var showSettings = false
+    @State private var playGame = false
     
     var body: some View {
         GeometryReader { geo in
@@ -100,6 +102,7 @@ struct ContentView: View {
                             if animateViewsIn {
                                 Button {
                                     // Start new game
+                                    playGame.toggle()
                                 } label: {
                                     Text("Play")
                                         .font(.largeTitle)
@@ -118,6 +121,9 @@ struct ContentView: View {
                                     
                                 }
                                 .transition(.offset(y: geo.size.height/3))
+                                .fullScreenCover(isPresented: $playGame) {
+                                    Gameplay()
+                                }
                             }
                         }
                         .animation(.easeOut(duration: 0.7).delay(2), value: animateViewsIn)
@@ -128,6 +134,7 @@ struct ContentView: View {
                             if animateViewsIn {
                                 Button {
                                     // Show settings screen
+                                    showSettings.toggle()
                                 } label: {
                                     Image(systemName: "gearshape.fill")
                                         .font(.largeTitle)
@@ -148,14 +155,17 @@ struct ContentView: View {
             }
             .frame(width: geo.size.width, height: geo.size.height)
         }
+        .sheet(isPresented: $showInstructions) {
+            Instructions()
+        }
+        .sheet(isPresented: $showSettings) {
+            Settings()
+        }
         .preferredColorScheme(.dark)
         .ignoresSafeArea()
         .onAppear {
             animateViewsIn = true
 //            playAudio()
-        }
-        .sheet(isPresented: $showInstructions) {
-            Instructions()
         }
 
     }

@@ -38,11 +38,11 @@ struct Instructions: View {
                         
                         Text("When you select the correct answer, you will be awarded all the points left for that question and they will be added to you total score.")
                             .padding(.horizontal)
-                        
-                        Text("Good Luck!")
-                            .font(.title)
                     }
                     .font(.title3)
+                    
+                    Text("Good Luck!")
+                        .font(.title)
                 }
                 .foregroundStyle(.black)
                 
